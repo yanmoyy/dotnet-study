@@ -1,0 +1,16 @@
+﻿root = true
+
+# All files
+[*]
+
+charset = utf-8-bom
+end_of_line = crlf
+indent_size = 4
+indent_style = space
+insert_final_newline = false
+max_line_length = 50
+tab_width = 4
+
+# Xml files
+[*.xml]
+indent_size = 2
