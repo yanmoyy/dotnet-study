@@ -1,6 +1,4 @@
-﻿using System.Transactions;
-
-class Program
+﻿class Program
 {
     const string bankRecords = """
         DEPOSIT,   10000, Initial balance
@@ -32,17 +30,21 @@ class Program
 
         foreach (var transaction in TransactionRecords(bankRecords))
         {
-            if (transaction.type == TransactionType.Deposit)
-                currentBalance += transaction.amount;
-            else if (transaction.type == TransactionType.Withdrawl)
-                currentBalance -= transaction.amount;
-            Console.WriteLine(
-                $"{transaction.type} => Parsed Amount: {transaction.amount}, New Balance: {currentBalance}"
-            );
+            currentBalance += transaction switch
+            {
+                Deposit d => d.Amount,
+                Withdrawal w => -w.Amount,
+                _ => 0.0,
+            };
+            Console.WriteLine($" {transaction} => New Balance: {currentBalance}");
         }
     }
 
-    static IEnumerable<(TransactionType type, double amount)> TransactionRecords(string inputText)
+    public record Deposit(double Amount, string Description);
+
+    public record Withdrawal(double Amount, string Description);
+
+    static IEnumerable<object?> TransactionRecords(string inputText)
     {
         var reader = new StringReader(inputText);
         string? line;
@@ -54,14 +56,11 @@ class Program
             if (double.TryParse(parts[1].Trim(), out double amount))
             {
                 if (transactionType?.ToUpper() is "DEPOSIT")
-                    yield return (TransactionType.Deposit, amount);
+                    yield return new Deposit(amount, parts[2]);
                 else if (transactionType?.ToUpper() is "WITHDRAWAL")
-                    yield return (TransactionType.Withdrawl, amount);
+                    yield return new Withdrawal(amount, parts[2]);
             }
-            else
-            {
-                yield return (TransactionType.Invalid, 0.0);
-            }
+            yield return default;
         }
     }
 }
