@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Engine
+﻿namespace Engine
 {
-    internal class Weapon
+    public class Weapon
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int NamePlural { get; set; }
         public int MinimumDamage { get; set; }
         public int MaximumDamage { get; set; }
+
+        public Weapon(int id, string name, string namePlural, int minimumDamage, int maximumDamage)
+        {
+            MinimumDamage = minimumDamage;
+            MaximumDamage = maximumDamage;
+        }
     }
 }
