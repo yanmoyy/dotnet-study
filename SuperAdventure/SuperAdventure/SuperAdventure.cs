@@ -1,5 +1,5 @@
-﻿using Engine;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using Engine;
 
 namespace SuperAdventure
 {
@@ -23,5 +23,9 @@ namespace SuperAdventure
             lblExperience.Text = _player.ExperiencePoints.ToString();
             lblLevel.Text = _player.Level.ToString();
         }
+
+        private void button1_Click(object sender, System.EventArgs e) { }
+
+        private void button1_Click_1(object sender, System.EventArgs e) { }
     }
 }
