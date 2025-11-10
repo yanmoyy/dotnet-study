@@ -12,6 +12,7 @@
         public Location LocationToEast { get; set; }
         public Location LocationToSouth { get; set; }
         public Location LocationToWest { get; set; }
+        public Vendor VendorWorkingHere { get; set; }
 
         public Location(
             int id,

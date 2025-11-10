@@ -146,6 +146,12 @@ namespace Engine
                 "You see a fountain."
             );
 
+            Vendor bobTheRatCatcher = new Vendor("Bob the Rat-Catcher");
+            bobTheRatCatcher.AddItemToInventory(ItemByID(ITEM_ID_PIECE_OF_FUR), 5);
+            bobTheRatCatcher.AddItemToInventory(ItemByID(ITEM_ID_RAT_TAIL), 3);
+
+            townSquare.VendorWorkingHere = bobTheRatCatcher;
+
             Location alchemistHut = new Location(
                 LOCATION_ID_ALCHEMIST_HUT,
                 "Alchemist's hut",
