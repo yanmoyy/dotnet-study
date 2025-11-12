@@ -166,6 +166,21 @@ namespace Engine
             }
         }
 
+        public static Player CreatePlayerFromDatabase(
+            int currentHitPoints,
+            int maximumHitPoints,
+            int gold,
+            int experiencePoints,
+            int currentLocationID
+        )
+        {
+            Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
+
+            player.MoveTo(World.LocationByID(currentLocationID));
+
+            return player;
+        }
+
         public void AddExperiencePoints(int experiencePointsToAdd)
         {
             ExperiencePoints += experiencePointsToAdd;
@@ -640,18 +655,18 @@ namespace Engine
             }
         }
 
-        public void AddItemToInventory(Item itemToAdd)
+        public void AddItemToInventory(Item itemToAdd, int quantity = 1)
         {
             InventoryItem item = Inventory.SingleOrDefault(ii => ii.Details.ID == itemToAdd.ID);
             if (item == null)
             {
                 // They didn't have the item, so add it to their inventory, with a quantity of one
-                Inventory.Add(new InventoryItem(itemToAdd, 1));
+                Inventory.Add(new InventoryItem(itemToAdd, quantity));
             }
             else
             {
                 // They have the item in their inventory, so increase the quantity by one
-                item.Quantity++;
+                item.Quantity += quantity;
             }
 
             RaiseInventoryChangedEvent(itemToAdd);
