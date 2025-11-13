@@ -60,6 +60,12 @@
     <Compile Include="TradingScreen.Designer.cs">
       <DependentUpon>TradingScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="WorldMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorldMap.Designer.cs">
+      <DependentUpon>WorldMap.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="SuperAdventure.resx">
       <DependentUpon>SuperAdventure.cs</DependentUpon>
     </EmbeddedResource>
@@ -74,6 +80,9 @@
     </Compile>
     <EmbeddedResource Include="TradingScreen.resx">
       <DependentUpon>TradingScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorldMap.resx">
+      <DependentUpon>WorldMap.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -93,6 +102,18 @@
       <Project>{86deccb9-d3a5-4e8f-8407-3bf998080fef}</Project>
       <Name>Engine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Bridge.png" />
+    <EmbeddedResource Include="Images\FarmFields.png" />
+    <EmbeddedResource Include="Images\Farmhouse.png" />
+    <EmbeddedResource Include="Images\HerbalistsGarden.png" />
+    <EmbeddedResource Include="Images\HerbalistsHut.png" />
+    <EmbeddedResource Include="Images\Home.png" />
+    <EmbeddedResource Include="Images\SpiderForest.png" />
+    <EmbeddedResource Include="Images\TownGate.png" />
+    <EmbeddedResource Include="Images\TownSquare.png" />
+    <EmbeddedResource Include="Images\Trader.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

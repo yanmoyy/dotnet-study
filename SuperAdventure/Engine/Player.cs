@@ -407,7 +407,7 @@ namespace Engine
                 AddXmlAttributeToNode(playerData, playerQuest, "ID", quest.Details.ID);
                 AddXmlAttributeToNode(playerData, playerQuest, "IsComplted", quest.IsCompleted);
 
-                playerQuest.AppendChild(playerQuest);
+                playerQuests.AppendChild(playerQuest);
             }
 
             return playerData.InnerXml; // The XML document, as a string, so we can save the data to disk

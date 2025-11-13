@@ -217,6 +217,13 @@ namespace SuperAdventure
             tradingScreen.ShowDialog(this);
         }
 
+        private void btnMap_Click(object sender, EventArgs e)
+        {
+            WorldMap mapScreen = new WorldMap();
+            mapScreen.StartPosition = FormStartPosition.CenterParent;
+            mapScreen.ShowDialog(this);
+        }
+
         private void SuperAdventure_FormClosed(object sender, FormClosedEventArgs e)
         {
             File.WriteAllText(PLAYTER_DATA_FILE_NAME, _player.ToXmlString());
