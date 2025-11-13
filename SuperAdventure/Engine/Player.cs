@@ -189,7 +189,7 @@ namespace Engine
         {
             Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
 
-            player.MoveTo(World.LocationByID(currentLocationID));
+            // player.MoveTo(World.LocationByID(currentLocationID));
 
             return player;
         }
@@ -286,7 +286,7 @@ namespace Engine
                 RaiseMessage("You hit the " + _currentMonster.Name + " for " + damage + " points.");
             }
 
-            if (_currentMonster.CurrentHitPoints <= 0)
+            if (_currentMonster.IsDead)
             {
                 LootTheCurrentMonster();
 
@@ -294,7 +294,7 @@ namespace Engine
             }
             else
             {
-                // Monster is still alive
+                LetTheMonsterAttack();
             }
         }
 

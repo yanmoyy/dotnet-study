@@ -20,6 +20,7 @@ namespace Engine
                     connection.Open();
 
                     Player player;
+                    int currentLocationID;
 
                     // Create a SQL command object, that uses the connection to our database
                     // The SqlCommand object is where we create our SQL statement
@@ -50,7 +51,7 @@ namespace Engine
                         int maximumHitPoints = (int)reader["MaximumHitPoints"];
                         int gold = (int)reader["Gold"];
                         int experiencePoints = (int)reader["ExperiencePoints"];
-                        int currentLocationID = (int)reader["CurrentLocationID"];
+                        currentLocationID = (int)reader["CurrentLocationID"];
 
                         // Create the Player object, with the saved game values
                         player = Player.CreatePlayerFromDatabase(
@@ -138,6 +139,8 @@ namespace Engine
 
                         reader.Close();
                     }
+
+                    player.CurrentLocation = World.LocationByID(currentLocationID);
 
                     // Now that the player has been built from the database, return it.
                     return player;
