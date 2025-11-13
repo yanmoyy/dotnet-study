@@ -1,8 +1,8 @@
-﻿using Engine;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using Engine;
 
 namespace SuperAdventureConsole
 {
@@ -236,7 +236,7 @@ namespace SuperAdventureConsole
 
         private static void AttackMonster()
         {
-            if (_player.CurrentLocation.MonsterLivingHere == null)
+            if (!_player.CurrentLocation.HasAMonster)
             {
                 Console.WriteLine("There is nothing here to attack");
             }

@@ -1,9 +1,9 @@
-﻿using Engine;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Engine;
 
 namespace SuperAdventure
 {
@@ -157,7 +157,7 @@ namespace SuperAdventure
                 rtbLocation.Text = _player.CurrentLocation.Name + Environment.NewLine;
                 rtbLocation.Text += _player.CurrentLocation.Description + Environment.NewLine;
 
-                if (_player.CurrentLocation.MonsterLivingHere == null)
+                if (!_player.CurrentLocation.HasAMonster)
                 {
                     cboWeapons.Visible = false;
                     cboPotions.Visible = false;

@@ -432,7 +432,7 @@ namespace Engine
 
             if (_currentMonster != null)
             {
-                RaiseMessage("You see a " + location.MonsterLivingHere.Name);
+                RaiseMessage("You see a " + _currentMonster.Name);
             }
         }
 

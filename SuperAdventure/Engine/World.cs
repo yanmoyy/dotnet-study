@@ -165,7 +165,7 @@ namespace Engine
                 "Alchemist's garden",
                 "Many plants are growing here."
             );
-            alchemistsGarden.MonsterLivingHere = MonsterByID(MONSTER_ID_RAT);
+            alchemistsGarden.AddMonster(MONSTER_ID_RAT, 100);
 
             Location farmhouse = new Location(
                 LOCATION_ID_FARMHOUSE,
@@ -179,7 +179,7 @@ namespace Engine
                 "Farmer's field",
                 "You see rows of vegetables growing here."
             );
-            farmersField.MonsterLivingHere = MonsterByID(MONSTER_ID_SNAKE);
+            farmersField.AddMonster(MONSTER_ID_SNAKE, 100);
 
             Location guardPost = new Location(
                 LOCATION_ID_GUARD_POST,
@@ -199,7 +199,7 @@ namespace Engine
                 "Forest",
                 "You see spider webs covering covering the trees in this forest."
             );
-            spiderField.MonsterLivingHere = MonsterByID(MONSTER_ID_GIANT_SPIDER);
+            spiderField.AddMonster(MONSTER_ID_GIANT_SPIDER, 100);
 
             // Link the locations together
             home.LocationToNorth = townSquare;
