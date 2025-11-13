@@ -115,5 +115,8 @@
     <EmbeddedResource Include="Images\TownSquare.png" />
     <EmbeddedResource Include="Images\Trader.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\FogLocation.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
