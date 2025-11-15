@@ -1,3 +1,5 @@
+using System.Xml;
+
 namespace FooCore
 {
     public class Block : IBlock
@@ -162,7 +164,7 @@ namespace FooCore
                 var d = storage.DiskSectorSize - (storage.BlockHeaderSize + dstOffset);
                 if (d > 0)
                 {
-                    dstOffset += d;
+                    // dstOffset += d;
                     srcOffset += d;
                     count -= d;
                 }
@@ -179,19 +181,95 @@ namespace FooCore
             }
         }
 
-        public void SetHeader(int field, long value)
-        {
-            throw new NotImplementedException();
-        }
-
         public long GetHeader(int field)
         {
-            throw new NotImplementedException();
+            ObjectDisposedException.ThrowIf(isDisposed, this);
+
+            // Validate field number
+            if (field < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            if (field >= (storage.BlockHeaderSize / 8))
+            {
+                throw new ArgumentException("Invalid field: " + field);
+            }
+
+            // Check from cache, if it is there then return it
+            if (field < cachedHeaderValue.Length)
+            {
+                if (cachedHeaderValue[field] == null)
+                {
+                    cachedHeaderValue[field] = BufferHelper.ReadBufferInt64(firstSector, field * 8);
+                }
+                return (long)cachedHeaderValue[field];
+            }
+            // Otherwise return straight away
+            else
+            {
+                return BufferHelper.ReadBufferInt64(firstSector, field * 8);
+            }
         }
 
+        public void SetHeader(int field, long value)
+        {
+            ObjectDisposedException.ThrowIf(isDisposed, this);
+
+            if (field < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            // Update cache if this field is cached
+            if (field < cachedHeaderValue.Length)
+            {
+                cachedHeaderValue[field] = value;
+            }
+
+            // Write in cached buffer
+            BufferHelper.WriteBuffer(value, firstSector, field * 8);
+            isFirstSectorDirty = true;
+        }
+
+        //
+        // Protected Methods
+        //
+
+        protected virtual void OnDisposed(EventArgs e)
+        {
+            Disposed?.Invoke(this, e);
+        }
+
+        //
+        // Dispose
+        //
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && !isDisposed)
+            {
+                isDisposed = true;
+
+                if (isFirstSectorDirty)
+                {
+                    this.stream.Position = Id * storage.BlockSize;
+                    this.stream.Write(firstSector, 0, storage.DiskSectorSize);
+                    this.stream.Flush();
+                    isFirstSectorDirty = false;
+                }
+
+                OnDisposed(EventArgs.Empty);
+            }
+        }
+
+        ~Block()
+        {
+            Dispose(false);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace FooCore
         readonly int blockHeaderSize;
         readonly int blockContentSize;
         readonly int unitOfWork;
-        readonly Dictionary<uint, Block> blocks = new Dictionary<uint, Block>();
+        readonly Dictionary<uint, Block> blocks = [];
 
         /// <summary>
         /// Size of a disk sector. default is 4096 or 128
@@ -31,6 +31,8 @@ namespace FooCore
         {
             get { return blockContentSize; }
         }
+
+        public Dictionary<uint, Block> Blocks => blocks;
 
         //
         // Constructors
@@ -65,9 +67,9 @@ namespace FooCore
         public IBlock Find(uint blockId)
         {
             // Check from initialized blocks
-            if (true == blocks.ContainsKey(blockId))
+            if (true == Blocks.ContainsKey(blockId))
             {
-                return blocks[blockId];
+                return Blocks[blockId];
             }
 
             // First, move to that block
@@ -81,7 +83,7 @@ namespace FooCore
             // Read the first 4KB of the block to construct a block from it
             var firstSector = new byte[DiskSectorSize];
             stream.Position = blockPosition;
-            stream.Read(firstSector, 0, DiskSectorSize);
+            stream.ReadExactly(firstSector, 0, DiskSectorSize);
 
             var block = new Block(this, blockId, firstSector, stream);
             OnBlockInitialized(block);
@@ -117,7 +119,7 @@ namespace FooCore
         protected virtual void OnBlockInitialized(Block block)
         {
             // Keep reference to it
-            blocks[block.Id] = block;
+            Blocks[block.Id] = block;
 
             // When block disposed, remove it from memory
             block.Disposed += HandleBlockDisposed;
@@ -130,7 +132,7 @@ namespace FooCore
             block.Disposed -= HandleBlockDisposed;
 
             // Remove it from memory
-            blocks.Remove(block.Id);
+            Blocks.Remove(block.Id);
         }
     }
 }
